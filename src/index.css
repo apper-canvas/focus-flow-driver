@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'react-toastify/dist/ReactToastify.css';
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Toast styling overrides */
+.Toastify__toast {
+  @apply rounded-lg shadow-lg border-l-4;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  min-height: 48px;
+  padding: 12px 16px;
+}
+
+.Toastify__toast--success {
+  @apply border-l-green-500 bg-white;
+  color: #374151;
+}
+
+.Toastify__toast--error {
+  @apply border-l-red-500 bg-white;
+  color: #374151;
+}
+
+.Toastify__toast--warning {
+  @apply border-l-amber-500 bg-white;
+  color: #374151;
+}
+
+.Toastify__progress-bar {
+  @apply bg-primary-500;
+}
+
+/* Checkbox animation styles */
+.task-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.task-checkbox:checked {
+  background-color: #0d9488;
+  border-color: #0d9488;
+  animation: bounce-subtle 0.4s ease-out;
+}
+
+.task-checkbox:checked::before {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.task-checkbox:hover {
+  border-color: #0d9488;
+}
+
+/* Strikethrough animation */
+.task-completed {
+  position: relative;
+}
+
+.task-completed::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #6b7280;
+  transform: scaleX(1);
+  animation: strikethrough 0.3s ease-out;
+}
+
+@keyframes strikethrough {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
