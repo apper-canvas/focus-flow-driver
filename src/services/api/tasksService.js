@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 
 const tasksService = {
-  async getAll() {
+async getAll(userId = null) {
     try {
       const { ApperClient } = window.ApperSDK;
       const apperClient = new ApperClient({
@@ -20,11 +20,19 @@ const tasksService = {
           {"field": {"Name": "due_date_c"}},
           {"field": {"Name": "created_at_c"}},
           {"field": {"Name": "completed_at_c"}},
-          {"field": {"Name": "category_c"}}
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "Owner"}}
         ],
         orderBy: [{"fieldName": "Id", "sorttype": "DESC"}],
         pagingInfo: {"limit": 100, "offset": 0}
       };
+
+      // Add owner filtering if user is authenticated
+      if (userId) {
+        params.where = [
+          {"FieldName": "Owner", "Operator": "ExactMatch", "Values": [userId]}
+        ];
+      }
 
       const response = await apperClient.fetchRecords('task_c', params);
 
@@ -48,7 +56,8 @@ const tasksService = {
         dueDate: task.due_date_c || null,
         category: task.category_c?.Name || "Personal",
         createdAt: task.created_at_c || new Date().toISOString(),
-        completedAt: task.completed_at_c || null
+        completedAt: task.completed_at_c || null,
+        ownerId: task.Owner?.Id || null
       }));
     } catch (error) {
       console.error("Error fetching tasks:", error?.response?.data?.message || error);

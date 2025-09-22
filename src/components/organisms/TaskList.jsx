@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
 import TaskItem from "@/components/organisms/TaskItem";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
 import tasksService from "@/services/api/tasksService";
 import { toast } from "react-toastify";
-
 const TaskList = ({ 
   searchQuery = "", 
   selectedCategory = "All", 
@@ -28,11 +28,19 @@ const TaskList = ({
     }
   }, [onRefresh]);
 
+const { user, isAuthenticated } = useSelector((state) => state.user);
+
   const loadTasks = async () => {
     try {
       setLoading(true);
       setError("");
-      const data = await tasksService.getAll();
+      
+      if (!isAuthenticated || !user) {
+        setError("Please log in to view your tasks.");
+        return;
+      }
+
+      const data = await tasksService.getAll(user.userId);
       setTasks(data);
     } catch (err) {
       setError("Failed to load tasks. Please try again.");
