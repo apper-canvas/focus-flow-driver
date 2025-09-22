@@ -317,4 +317,3 @@ const tasksService = {
 };
 
 export default tasksService;
-export default tasksService;
