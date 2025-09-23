@@ -63,15 +63,10 @@ function AppContent() {
           // Store user information in Redux
           dispatch(setUser(JSON.parse(JSON.stringify(user))));
         } else {
-          // User is not authenticated
+// User is not authenticated - allow anonymous access
           if (!isAuthPage) {
-            navigate(
-              currentPath.includes('/signup')
-                ? `/signup?redirect=${currentPath}`
-                : currentPath.includes('/login')
-                ? `/login?redirect=${currentPath}`
-                : '/login'
-            );
+            // Allow anonymous users to access the main application
+            navigate(currentPath);
           } else if (redirectPath) {
             if (
               !['error', 'signup', 'login', 'callback', 'prompt-password', 'reset-password'].some((path) => currentPath.includes(path))
@@ -83,7 +78,8 @@ function AppContent() {
           } else if (isAuthPage) {
             navigate(currentPath);
           } else {
-            navigate('/login');
+            // Default to main page for anonymous access
+            navigate('/');
           }
           dispatch(clearUser());
         }

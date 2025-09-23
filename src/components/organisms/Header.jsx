@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const Header = ({ onAddTask, onSearch, searchQuery }) => {
   const { logout } = useContext(AuthContext);
-  const { user } = useSelector((state) => state.user);
+const { user, isAuthenticated } = useSelector((state) => state.user);
 
   return (
     <header className="bg-white border-b border-slate-200 shadow-sm">
@@ -24,7 +24,7 @@ const Header = ({ onAddTask, onSearch, searchQuery }) => {
           </div>
           
           <div className="flex items-center gap-3">
-            {user && (
+{user && (
               <div className="flex items-center gap-2 px-3 py-2 bg-slate-100 rounded-lg">
                 <ApperIcon name="User" className="w-4 h-4 text-slate-600" />
                 <span className="text-sm font-medium text-slate-700">
@@ -32,14 +32,31 @@ const Header = ({ onAddTask, onSearch, searchQuery }) => {
                 </span>
               </div>
             )}
-            <Button 
-              onClick={logout} 
-              variant="outline" 
-              className="flex items-center gap-2"
-            >
-              <ApperIcon name="LogOut" className="w-4 h-4" />
-              Logout
-            </Button>
+            
+            {/* Show auth buttons only for authenticated users */}
+            {isAuthenticated && (
+              <Button 
+                onClick={logout} 
+                variant="outline" 
+                className="flex items-center gap-2"
+              >
+                <ApperIcon name="LogOut" className="w-4 h-4" />
+                Logout
+              </Button>
+            )}
+            
+            {/* Show login button for anonymous users */}
+            {!isAuthenticated && (
+              <Button 
+                onClick={() => window.location.href = '/login'} 
+                variant="outline" 
+                className="flex items-center gap-2"
+              >
+                <ApperIcon name="LogIn" className="w-4 h-4" />
+                Login
+              </Button>
+            )}
+            
             <Button onClick={onAddTask} className="flex items-center gap-2 px-6">
               <ApperIcon name="Plus" className="w-4 h-4" />
               Add Task

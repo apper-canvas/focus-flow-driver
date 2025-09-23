@@ -28,6 +28,8 @@ async getAll(userId = null) {
       };
 
       // Add owner filtering if user is authenticated
+// Only filter by userId if provided (authenticated user)
+      // If no userId, return all tasks (anonymous access)
       if (userId) {
         params.where = [
           {"FieldName": "Owner", "Operator": "ExactMatch", "Values": [userId]}

@@ -28,19 +28,16 @@ const TaskList = ({
     }
   }, [onRefresh]);
 
-const { user, isAuthenticated } = useSelector((state) => state.user);
+const { user } = useSelector((state) => state.user);
 
   const loadTasks = async () => {
     try {
       setLoading(true);
       setError("");
       
-      if (!isAuthenticated || !user) {
-        setError("Please log in to view your tasks.");
-        return;
-      }
+// Allow both authenticated and anonymous access
 
-      const data = await tasksService.getAll(user.userId);
+const data = await tasksService.getAll(user?.userId);
       setTasks(data);
     } catch (err) {
       setError("Failed to load tasks. Please try again.");
