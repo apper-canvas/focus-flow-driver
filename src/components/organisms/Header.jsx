@@ -57,9 +57,9 @@ const { user, isAuthenticated } = useSelector((state) => state.user);
               </Button>
             )}
             
-            <Button onClick={onAddTask} className="flex items-center gap-2 px-6">
-              <ApperIcon name="Plus" className="w-4 h-4" />
-              Add Task
+<Button onClick={onAddTask} className="flex items-center gap-2 px-6 bg-gradient-to-r from-primary-500 to-blue-500 hover:from-primary-600 hover:to-blue-600">
+              <ApperIcon name="Sparkles" className="w-4 h-4" />
+              Add Task with AI
             </Button>
           </div>
         </div>
